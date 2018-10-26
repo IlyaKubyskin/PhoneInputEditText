@@ -59,6 +59,7 @@ class MainActivity : AppCompatActivity() {
                             result.length
                         }
                     }
+
                 setText(result, selection)
             } catch (e: Exception) {
                 Log.d(TAG, e.message)
