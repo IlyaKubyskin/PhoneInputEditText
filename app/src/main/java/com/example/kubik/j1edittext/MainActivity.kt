@@ -34,12 +34,7 @@ class MainActivity : AppCompatActivity() {
         override fun afterTextChanged(s: Editable?) {
             try {
                 currentLength = s!!.length
-                var string = ""
-                s.forEach {
-                    if (it != ' ') {
-                        string += it
-                    }
-                }
+                val string = removeSpaces(s)
                 var result = ""
                 for (i in 0 until string.length) {
                     if (result.length <= 13) {
@@ -64,7 +59,6 @@ class MainActivity : AppCompatActivity() {
                             result.length
                         }
                     }
-
                 setText(result, selection)
             } catch (e: Exception) {
                 Log.d(TAG, e.message)
@@ -89,14 +83,17 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun getFullPhoneNumber(): String {
-        val s = phoneInputEditText.text.toString()
+    private fun removeSpaces(s: Editable): String {
         var phone = ""
-        s.forEach {
+        s.toString().forEach {
             if (it != ' ') {
                 phone += it
             }
         }
-        return code.trim() + phone
+        return phone
+    }
+
+    private fun getFullPhoneNumber(): String {
+        return code.trim() + removeSpaces(phoneInputEditText.text)
     }
 }
