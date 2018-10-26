@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">J1EditText</string>
     <string name="phone_hint">+7 xxx xxx xx xx</string>
+    <string name="get_number">get number</string>
 </resources>

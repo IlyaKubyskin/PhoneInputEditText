@@ -9,12 +9,14 @@ import kotlinx.android.synthetic.main.activity_main.*
 class MainActivity : AppCompatActivity() {
 
     private val TAG = "myLogs"
+    private var previousLength = 0
+    private var currentLength = 0
+    private var position = 0
+    private val code = "+7 "
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-
-        val code = "+7 "
 
         phoneInputEditText.setCompoundDrawables(PhoneCode(code, this), null, null, null)
         phoneInputEditText.compoundDrawablePadding = (resources.getDimension(R.dimen.editTextSize) * 1.3).toInt()
@@ -23,11 +25,10 @@ class MainActivity : AppCompatActivity() {
     override fun onResume() {
         super.onResume()
         phoneInputEditText.addTextChangedListener(watcher)
+        buttonShowPhone.setOnClickListener {
+            textViewNumber.text = getFullPhoneNumber()
+        }
     }
-
-    private var previousLength = 0
-    private var currentLength = 0
-    private var position = 0
 
     private val watcher = object : TextWatcher {
         override fun afterTextChanged(s: Editable?) {
@@ -86,5 +87,16 @@ class MainActivity : AppCompatActivity() {
             setSelection(selection)
             addTextChangedListener(watcher)
         }
+    }
+
+    private fun getFullPhoneNumber(): String {
+        val s = phoneInputEditText.text.toString()
+        var phone = ""
+        s.forEach {
+            if (it != ' ') {
+                phone += it
+            }
+        }
+        return code.trim() + phone
     }
 }

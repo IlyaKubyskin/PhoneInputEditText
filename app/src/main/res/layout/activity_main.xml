@@ -5,15 +5,30 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
+    <TextView
+        android:id="@+id/textViewNumber"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center|top"
+        android:layout_marginTop="@dimen/margin_large" />
+
     <EditText
         android:id="@+id/phoneInputEditText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:maxLength="13"
-        android:inputType="phone"
-        android:textSize="@dimen/editTextSize"
+        android:autofillHints="@string/phone_hint"
         android:ems="7"
-        android:autofillHints="@string/phone_hint" />
+        android:inputType="phone"
+        android:maxLength="13"
+        android:textSize="@dimen/editTextSize" />
+
+    <Button
+        android:id="@+id/buttonShowPhone"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|center"
+        android:layout_marginBottom="@dimen/margin_large"
+        android:text="@string/get_number" />
 
 </FrameLayout>
