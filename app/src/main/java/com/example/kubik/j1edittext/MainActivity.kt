@@ -33,7 +33,9 @@ class MainActivity : AppCompatActivity() {
     private val watcher = object : TextWatcher {
         override fun afterTextChanged(s: Editable?) {
             try {
-                currentLength = s!!.length
+                if (s != null) {
+                    currentLength = s.length
+                }
                 val string = removeSpaces(s)
                 var result = ""
                 for (i in 0 until string.length) {
@@ -67,7 +69,9 @@ class MainActivity : AppCompatActivity() {
         }
 
         override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
-            previousLength = s!!.length
+            if (s != null) {
+                previousLength = s.length
+            }
         }
 
         override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
@@ -84,7 +88,7 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun removeSpaces(s: Editable): String {
+    private fun removeSpaces(s: Editable?): String {
         var phone = ""
         s.toString().forEach {
             if (it != ' ') {
