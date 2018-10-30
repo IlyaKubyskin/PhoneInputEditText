@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.text.*
 import android.util.Log
+import android.widget.EditText
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
@@ -36,21 +37,25 @@ class MainActivity : AppCompatActivity() {
                 if (s != null) {
                     currentLength = s.length
                 }
-                val string = removeSpaces(s)
+                val number = removeSpaces(s)
                 var result = ""
-                for (i in 0 until string.length) {
+                for (i in 0 until number.length) {
                     if (result.length <= 13) {
                         if (i == 3 || i == 6 || i == 8) {
                             result += " "
                         }
-                        result += string[i]
+                        result += number[i]
                     }
                 }
 
                 val selection =
                     if (currentLength > previousLength) {
                         if (previousLength > position) {
-                            position + 1
+                            if (result[position] == ' ') {
+                                position + 2
+                            } else {
+                                position + 1
+                            }
                         } else {
                             result.length
                         }
@@ -61,8 +66,7 @@ class MainActivity : AppCompatActivity() {
                             result.length
                         }
                     }
-
-                setText(result, selection)
+                phoneInputEditText.setText(this, result, selection)
             } catch (e: Exception) {
                 Log.d(TAG, e.message)
             }
@@ -79,15 +83,6 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun setText(text: String, selection: Int) {
-        phoneInputEditText.apply {
-            removeTextChangedListener(watcher)
-            setText(text)
-            setSelection(selection)
-            addTextChangedListener(watcher)
-        }
-    }
-
     private fun removeSpaces(s: Editable?): String {
         var phone = ""
         s.toString().forEach {
@@ -98,7 +93,12 @@ class MainActivity : AppCompatActivity() {
         return phone
     }
 
-    private fun getFullPhoneNumber(): String {
-        return code.trim() + removeSpaces(phoneInputEditText.text)
+    private fun getFullPhoneNumber() = code.trim() + removeSpaces(phoneInputEditText.text)
+
+    private fun EditText.setText(watcher: TextWatcher, text: String, selection: Int) {
+        removeTextChangedListener(watcher)
+        setText(text)
+        setSelection(selection)
+        addTextChangedListener(watcher)
     }
 }
